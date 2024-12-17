@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'tasks',
     'corsheaders',
     'drf_yasg',
+    'django_filters'
 ]
 
 REST_FRAMEWORK = {
