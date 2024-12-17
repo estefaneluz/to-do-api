@@ -12,8 +12,9 @@ class TaskStatus(Enum):
     DONE = "done"
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    hex_color = models.CharField(max_length=100, default=str)
+    name = models.CharField(max_length=100)
+    color = models.CharField(max_length=100, default=str)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tags')
 
     def __str__(self):
         return self.name

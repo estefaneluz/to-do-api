@@ -3,9 +3,13 @@ from .models import TaskItem, Tag
 from users.models import User
 
 class TagSerializer(serializers.ModelSerializer):
+    created_by = serializers.SerializerMethodField()
     class Meta:
         model = Tag
-        fields = ['id', 'name', 'hex_color']
+        fields = ['id', 'name', 'color', 'created_by']
+
+    def get_created_by(self, obj):
+        return obj.created_by.name
 
 class TaskItemSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)

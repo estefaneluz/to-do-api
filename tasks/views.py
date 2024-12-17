@@ -56,10 +56,11 @@ class TagViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Tag.objects.all()
+        return Tag.objects.filter(created_by=self.request.user)
+
     
     def perform_create(self, serializer):
-        serializer.save()
+        serializer.save(created_by=self.request.user)
     
     @action(detail=False, methods=['get'])
     def list_tags(self, request):
