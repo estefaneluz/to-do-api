@@ -6,7 +6,7 @@ class TagSerializer(serializers.ModelSerializer):
     created_by = serializers.SerializerMethodField()
     class Meta:
         model = Tag
-        fields = ['id', 'name', 'color', 'created_by']
+        fields = ['id', 'name', 'hex_color', 'created_by']
 
     def get_created_by(self, obj):
         return obj.created_by.name
