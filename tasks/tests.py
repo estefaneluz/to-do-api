@@ -38,30 +38,6 @@ class TestTaskItemViews:
         assert response.status_code == 400
         assert 'tags' in response.data
 
-    # def test_update_task(self):
-    #     user = User.objects.create_user(email='test@example.com', name='Test User', password='password')
-    #     token, _ = Token.objects.get_or_create(user=user)
-    #     client = APIClient()
-    #     client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-    #     task = TaskItem.objects.create(title='Tarefa existente', created_by=user)
-    #     data = {'title': 'Tarefa atualizada'}
-    #     response = client.put(f'/api/tasks/{task.id}/', data, format='json')
-    #     assert response.status_code == 200
-    #     assert 'id' in response.data
-    #     assert 'title' in response.data
-    #     assert 'tags' in response.data
-    
-    # def test_update_task_empty_title(self):
-    #     user = User.objects.create_user(email='test@example.com', name='Test User', password='password')
-    #     token, _ = Token.objects.get_or_create(user=user)
-    #     client = APIClient()
-    #     client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-    #     task = TaskItem.objects.create(title='Tarefa existente', created_by=user)
-    #     data = {'title': ''}
-    #     response = client.put(f'/api/tasks/{task.id}/', data, format='json')
-    #     assert response.status_code == 400
-    #     assert 'title' in response.data
-
     def test_update_task(self):
         user = User.objects.create_user(email='test@example.com', name='Test User', password='password')
         token, _ = Token.objects.get_or_create(user=user)
@@ -152,8 +128,8 @@ class TestTaskItemViews:
       client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
       task1 = TaskItem.objects.create(title='Tarefa 1', created_by=user)
       task2 = TaskItem.objects.create(title='Tarefa 2', created_by=user)
-      tag1 = Tag.objects.create(name='Tag 1')
-      tag2 = Tag.objects.create(name='Tag 2')
+      tag1 = Tag.objects.create(name='Tag 1', created_by=user)
+      tag2 = Tag.objects.create(name='Tag 2', created_by=user)
       task1.tags.add(tag1)
       task2.tags.add(tag2)
       response = client.get('/api/tasks/', {'tags': [tag1.id]}, format='json')
@@ -188,7 +164,7 @@ class TestTagViews:
         token, _ = Token.objects.get_or_create(user=user)
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        tag = Tag.objects.create(name='Tag existente')
+        tag = Tag.objects.create(name='Tag existente', created_by=user)
         data = {'name': 'Tag atualizada'}
         response = client.put
 
@@ -197,8 +173,8 @@ class TestTagViews:
         token, _ = Token.objects.get_or_create(user=user)
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        tag1 = Tag.objects.create(name='Tag 1')
-        tag2 = Tag.objects.create(name='Tag 2')
+        tag1 = Tag.objects.create(name='Tag 1', created_by=user)
+        tag2 = Tag.objects.create(name='Tag 2', created_by=user)
         response = client.get('/api/tags/', format='json')
         assert response.status_code == 200
         assert len(response.data) == 2
